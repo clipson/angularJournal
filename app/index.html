@@ -1,0 +1,68 @@
+<html>
+<head>
+  <title>AngularJournal</title>
+  <link rel="stylesheet" type="text/css" href="styles/style.css"/>
+  <link rel="stylesheet" type="text/css" media="all" href="https://code.jquery.com/ui/1.8.9/themes/base/jquery-ui.css"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"   integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E="   crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+<body ng-app="angularJournalApp" ng-controller="MainCtrl as main">
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand">AngularJournal</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Pages
+          <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <span ng-repeat="page in main.book.pages">
+              <li><a ng-find id="{{page.number*2-1}}"> Page {{page.number*2-1}}</a></li>
+              <li><a ng-find id="{{page.number*2}}"> Page {{page.number*2}}</a></li>
+            </span>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+<div class="container">
+	<span ng-repeat="page in main.book.pages">
+    <div class="page" id="{{page.number*2 -1}}" ng-style="{'z-index': -(page.number)}">
+       <div class="front">
+         <textarea class='pageContent' ng-edit ng-model="page.front.content">
+         </textarea>
+         <p class="num">{{page.number * 2 -1}}</p>
+         <div class="bookpager" ng-flip></div>
+         <a class="edit btn btn-primary btn-circle-sm" ng-click="page.edit('front', page.front.content)">
+           <span class="glyphicon glyphicon-floppy-disk"></span>
+         </a>
+       </div>
+       <div class="back">
+         <textarea class='pageContent' ng-edit ng-model="page.back.content">
+         </textarea>
+         <p class="num">{{page.number * 2}}</p>
+         <div class="bookpager" ng-flip></div>
+         <a class="edit btn btn-primary btn-circle-sm" ng-click="page.edit('back', page.back.content)">
+           <span class="glyphicon glyphicon-floppy-disk"></span>
+         </a>
+       </div>
+     </div>
+  </span>
+</div>
+<br>
+
+<div class="container-fluid">
+  <button class="btn" ng-click="main.book.addPage()">Add Page</button>
+  <button class="btn" ng-click="main.book.removePage()">Remove Page</button>
+</div>
+
+<script src="scripts/app.js"></script>
+<script src="scripts/controllers/mainController.js"></script>
+<script src="scripts/services/localStore.js"></script>
+</body>
+</html>
